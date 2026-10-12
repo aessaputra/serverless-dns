@@ -75,6 +75,7 @@ jobs:
         uses: cloudflare/wrangler-action@v4
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
+          preCommands: npx wrangler whoami
           command: deploy
           packageManager: npm
           wranglerVersion: ${{ env.WRANGLER_VER }}
