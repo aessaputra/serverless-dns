@@ -1,7 +1,6 @@
 name = "serverless-dns"
 main = "./dist/worker.js"
-workers_dev = true
-preview_urls = false
+workers_dev = false
 logpush = false
 compatibility_date = "2023-03-21"
 send_metrics = false
