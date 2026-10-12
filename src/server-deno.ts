@@ -229,7 +229,8 @@ async function resolveQuery(q: Uint8Array) {
   const freq: Request = new Request("https://ignored.example.com", {
     method: "POST",
     headers: util.concatHeaders(util.dnsHeaders(), util.contentLengthHeader(q)),
-    body: q,
+    // deno-lint-ignore no-explicit-any
+    body: q as any,
   });
 
   const r = await handleRequest(util.mkFetchEvent(freq));
