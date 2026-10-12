@@ -22,8 +22,7 @@ export async function setup(lp: LogPusher) {
     return false;
   }
 
-  // deno-lint-ignore no-explicit-any
-  const url: string = (envutil.geoipUrl() as any) || "";
+  const url: string = envutil.geoipUrl();
   const timestamp: string = timestampFromUrl(url);
 
   const ok = setupLocally(lp, timestamp);
