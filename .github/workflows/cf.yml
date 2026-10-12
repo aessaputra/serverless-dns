@@ -41,7 +41,7 @@ on:
 
 env:
   GIT_REF: ${{ github.event.inputs.commit || github.ref }}
-  WRANGLER_VER: '3.56.0'
+  WRANGLER_VER: '4.149.0'
 
 concurrency:
   group: cloudflare-production
@@ -50,11 +50,11 @@ concurrency:
 jobs:
   deploy:
     name: 🚀 Deploy worker
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 60
     steps:
       - name: 🛒 Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           ref: ${{ env.GIT_REF }}
           fetch-depth: 0
@@ -62,15 +62,21 @@ jobs:
       - name: Record deployed commit
         run: echo "COMMIT_SHA=$(git rev-parse HEAD)" >> "$GITHUB_ENV"
 
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: 24
+
       - name: 🏗 Get dependencies
         run: npm i
 
       - name: 📚 Wrangler publish
         # github.com/cloudflare/wrangler-action
-        uses: cloudflare/wrangler-action@v3
+        uses: cloudflare/wrangler-action@v4
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
           command: deploy
+          packageManager: npm
           wranglerVersion: ${{ env.WRANGLER_VER }}
           accountId: ${{ secrets.CF_ACCOUNT_ID }}
         env:
