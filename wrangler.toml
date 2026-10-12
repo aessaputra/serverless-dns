@@ -7,7 +7,7 @@ send_metrics = false
 minify = true
 upload_source_maps = true
 routes = [
-  "dns.aes.my.id/*"
+  { pattern = "dns.aes.my.id", custom_domain = true }
 ]
 
 [build]
